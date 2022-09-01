@@ -7,11 +7,18 @@ import {
 	useContractCall,
 } from '@thirdweb-dev/react'
 import type { NextPage } from 'next'
-import { Draw, Layout, Modal } from '../components'
+import { Layout, Modal, Admin } from '../components'
 
-export const Home: NextPage = () => {
+export const AdminPage: NextPage = () => {
 	const address = useAddress()
 	const connectWithMetaMask = useMetamask()
+	const { contract, isLoading } = useContract(
+		process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS
+	)
+	const { data: isLotteryOperator } = useContractData(
+		contract,
+		'lotteryOperator'
+	)
 
 	return (
 		<Layout>
@@ -21,10 +28,10 @@ export const Home: NextPage = () => {
 					onClick={connectWithMetaMask}
 				/>
 			) : (
-				<Draw />
+				<Admin />
 			)}
 		</Layout>
 	)
 }
 
-export default Home
+export default AdminPage
