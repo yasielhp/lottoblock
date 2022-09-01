@@ -75,6 +75,7 @@ export const CountdownTimer = () => {
 			)
 		}
 	}
+	if (isLoadingExpiration) return null
 
 	return (
 		<div>
