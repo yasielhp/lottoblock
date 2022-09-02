@@ -1,5 +1,4 @@
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useEffect, useRef, useState } from 'react'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import {
@@ -9,7 +8,7 @@ import {
 	useDisconnect,
 } from '@thirdweb-dev/react'
 import Link from 'next/link'
-import { NavButton } from './NavButton'
+import { CustomButton } from './CustomButton'
 
 export const NavBar = () => {
 	const address = useAddress()
@@ -63,7 +62,7 @@ export const NavBar = () => {
 							</Menu.Item>
 						)}
 						<Menu.Item as="div" className="">
-							<NavButton
+							<CustomButton
 								width="w-[170px]"
 								isActive
 								onClick={disconnect}

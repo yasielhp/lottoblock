@@ -4,7 +4,7 @@ import {
 	useContractCall,
 	useAddress,
 } from '@thirdweb-dev/react'
-import { NavButton, Loading, CountdownTimer } from './'
+import { CustomButton, Loading, CountdownTimer } from './'
 import { ethers } from 'ethers'
 import { useState, useEffect } from 'react'
 import { currency } from '../constants'
@@ -129,28 +129,26 @@ export const Draw = () => {
 				</div>
 			</Marquee>
 			{winnings > 0 && (
-				<div className="max-w-md md-max-w-2xl lg:max-w-4xl mx-auto mt-5">
-					<button
-						onClick={onWithDrawWinnings}
-						className="p-5 bg-yellow-500 text-stone-800 animate-pulse text-center rounded-xl w-full">
-						<p className="font-bold">Winner Winner Chicken Dinner!</p>
-						<p>
-							Total Winnings: {ethers.utils.formatEther(winnings.toString())}{' '}
-							{currency}
-						</p>
-						<p className="font-semibold mt-4">Click here to withdraw</p>
-					</button>
-				</div>
+				<button
+					onClick={onWithDrawWinnings}
+					className="p-4 bg-yellow-500 text-stone-800 animate-pulse text-center rounded-xl w-full my-4 md:max-w-xl">
+					<p className="font-bold text-xl">You have win the raffle!</p>
+					<p>
+						Total Winnings: {ethers.utils.formatEther(winnings.toString())}{' '}
+						{currency}
+					</p>
+					<p className="font-semibold mt-2">Click here to withdraw</p>
+				</button>
 			)}
-			<div className="space-y-5 md:space-y-0 m-5 md:flex md:flex-row items-start justify-center md:space-x-5 ">
-				<div className="p-5 rounded-lg bg-stone-800 border-stone-600 border-2">
-					<h1 className="text-5xl text-white font-semibold text-center mb-2">
-						The Next Draw
+			<div className="space-y-5 space-x-0 md:space-y-0 md:flex md:flex-row items-start justify-center md:space-x-5 mt-2">
+				<div className="p-4 rounded-lg bg-stone-800 border-stone-600 border-2">
+					<h1 className="text-5xl text-white font-semibold text-center mb-4">
+						Raffle
 					</h1>
-					<div className="flex justify-between p-2 space-x-2">
-						<div className="text-white p-4 rounded-md border-2 border-stone-700 bg-stone-900">
-							<h2 className="text-sm">Total Pool</h2>
-							<p className="text-xl">
+					<div className="flex justify-center items-center w-full pb-2 space-x-2">
+						<div className="text-white w-1/2 h-20 p-4 flex flex-col items-start justify-center rounded-md border-2 border-stone-700 bg-stone-900">
+							<h2 className="text-sm font-bold">Total Pool</h2>
+							<p className="text-xl ">
 								{currentWinningReward &&
 									ethers.utils.formatEther(
 										currentWinningReward.toString()
@@ -158,14 +156,16 @@ export const Draw = () => {
 								{currency}
 							</p>
 						</div>
-						<div className="text-white p-4  rounded-md border-2 border-stone-700 bg-stone-900">
-							<h2 className="text-sm">Total Remaining</h2>
-							<p className="text-xl">{remainingTickets?.toNumber()} TICKETS</p>
+						<div className="text-white  w-1/2 h-20 p-4 flex flex-col items-start justify-center rounded-md border-2 border-stone-700 bg-stone-900">
+							<h2 className="text-sm font-bold">Total Remaining</h2>
+							<p className="text-xl font-light">
+								{remainingTickets?.toNumber()} TICKETS
+							</p>
 						</div>
 					</div>
 					<CountdownTimer />
 				</div>
-				<div className="p-5 rounded-lg bg-stone-800 border-stone-600 border-2 space-y-2">
+				<div className="p-4 rounded-lg bg-stone-800 border-stone-600 border-2 space-y-2">
 					<div className="p-5 rounded-lg bg-stone-800 border-stone-500 border">
 						<div className="flex justify-between items-center text-white pb-2">
 							<h2>Price per ticket</h2>
@@ -175,10 +175,19 @@ export const Draw = () => {
 								{currency}
 							</p>
 						</div>
-						<div className="flex text-white items-center space-2 bg-stone-900 border-stone-700 border p-4">
-							<p>TICKETS</p>
+						<div
+							aria-disabled={
+								expiration?.toString() < Date.now().toString() ||
+								remainingTickets?.toNumber() === 0
+							}
+							className="flex text-white items-center space-2 bg-stone-900 border-stone-700 border p-4">
+							<p className="text-yellow-500">TICKETS</p>
 							<input
-								className="flex w-full bg-transparent text-right outline-none"
+								disabled={
+									expiration?.toString() < Date.now().toString() ||
+									remainingTickets?.toNumber() === 0
+								}
+								className="flex w-full bg-transparent text-right font-bold outline-none"
 								type="number"
 								min={1}
 								max={10}
@@ -209,7 +218,7 @@ export const Draw = () => {
 								<p>TBC</p>
 							</div>
 						</div>
-						<NavButton
+						<CustomButton
 							isActive
 							onClick={handleClick}
 							isDisabled={
@@ -226,16 +235,16 @@ export const Draw = () => {
 					</div>
 					{userTickets > 0 && (
 						<div>
-							<p className="text-center text-sm my-2">
-								Yoa have {userTickets} Tickets in this draw
+							<p className="text-center font-light text-yellow-500 text-sm my-2">
+								You have {userTickets} Tickets in this draw
 							</p>
-							<div className="flex max-w-sm flex-wrap gap-x-2 gap-y-2 ">
+							<div className="flex max-w-sm flex-wrap gap-x-2 gap-y-2 justify-center items-center">
 								{Array(userTickets)
 									.fill('')
 									.map((_, i) => (
 										<p
 											key={i}
-											className="h-20 w-12 bg-yellow-500 text-stone-900 rounded-lg flex flex-shrink-0 items-center justify-center text-xs italic">
+											className="h-8 w-8 bg-yellow-500 text-stone-900 rounded-lg flex flex-shrink-0 items-center justify-center text-xs font-bold cursor-pointer">
 											{i + 1}
 										</p>
 									))}

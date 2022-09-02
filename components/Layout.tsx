@@ -9,7 +9,7 @@ export const Layout = ({ children }: Props) => {
 	return (
 		<div>
 			<Head>
-				<title>LOTTOBLOCK | Lottery Dapp</title>
+				<title>RAFFLEBLOCK | Raffle Dapp</title>
 				<link rel="icon" href="/favicon.svg" />
 			</Head>
 			<Header />

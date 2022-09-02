@@ -20,52 +20,58 @@ export const CountdownTimer = () => {
 		if (completed) {
 			return (
 				<div>
-					<h2 className="text-sm text-center animate-pulse my-3">
+					<h2 className="text-sm text-yellow-500 text-center animate-pulse my-3">
 						Ticket sales have now closed for this draw
 					</h2>
-					<div className="flex space-x-6">
+					<div className="flex space-x-2 md:space-x-2">
 						<div className="flex-1">
-							<div className="p-8 text-5xl text-center rounded-lg lg:min-w-[150px] bg-stone-700 animate-pulse">
+							<div className="p-7 flex items-center justify-center text-5xl text-center rounded-lg w-[100px] lg:min-w-[130px] bg-stone-700 animate-pulse">
 								{hours}
 							</div>
-							<div className="text-center uppercase text-sm pt-4">Hours</div>
+							<div className="text-center uppercase text-sm pt-4 animate-pulse">
+								Hours
+							</div>
 						</div>
 						<div className="flex-1">
-							<div className="p-8 text-5xl text-center rounded-lg lg:min-w-[150px] bg-stone-700 animate-pulse">
+							<div className="p-7 flex items-center justify-center text-5xl text-center rounded-lg w-[100px] lg:min-w-[130px] bg-stone-700 animate-pulse">
 								{minutes}
 							</div>
-							<div className="text-center uppercase text-sm pt-4">Minutes</div>
+							<div className="text-center uppercase text-sm pt-4 animate-pulse">
+								Minutes
+							</div>
 						</div>
 						<div className="flex-1">
-							<div className="p-8 text-5xl text-center rounded-lg lg:min-w-[150px] bg-stone-700 animate-pulse">
+							<div className="p-7 flex items-center justify-center text-5xl text-center rounded-lg w-[100px] lg:min-w-[130px] bg-stone-700 animate-pulse">
 								{seconds}
 							</div>
-							<div className="text-center uppercase text-sm pt-4">Seconds</div>
+							<div className="text-center uppercase text-sm pt-4 animate-pulse">
+								Seconds
+							</div>
 						</div>
 					</div>
 				</div>
 			)
 		} else {
 			return (
-				<div>
-					<h3 className="text-white text-sm mb-2 text-center">
+				<div className="bg-stone-900 border-2 border-stone-700 rounded-md flex flex-col items-center justify-center pb-4 px-2">
+					<h3 className="text-white text-lg my-2 text-center">
 						Time Remaining
 					</h3>
-					<div className="flex space-x-6">
+					<div className="flex space-x-2 md:space-x-2">
 						<div className="flex-1">
-							<div className="p-8 text-5xl text-center rounded-lg lg:min-w-[150px] bg-stone-700 animate-pulse">
+							<div className="p-7 flex items-center justify-center text-5xl text-center rounded-lg w-[100px] lg:min-w-[130px] bg-stone-700 animate-pulse">
 								{hours}
 							</div>
 							<div className="text-center uppercase text-sm pt-4">Hours</div>
 						</div>
 						<div className="flex-1">
-							<div className="p-8 text-5xl text-center rounded-lg lg:min-w-[150px] bg-stone-700 animate-pulse">
+							<div className="p-7 flex items-center justify-center text-5xl text-center rounded-lg w-[100px] lg:min-w-[130px] bg-stone-700 animate-pulse">
 								{minutes}
 							</div>
 							<div className="text-center uppercase text-sm pt-4">Minutes</div>
 						</div>
 						<div className="flex-1">
-							<div className="p-8 text-5xl text-center rounded-lg lg:min-w-[150px] bg-stone-700 animate-pulse">
+							<div className="p-7 flex items-center justify-center text-5xl text-center rounded-lg w-[100px] lg:min-w-[130px] bg-stone-700 animate-pulse">
 								{seconds}
 							</div>
 							<div className="text-center uppercase text-sm pt-4">Seconds</div>

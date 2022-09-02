@@ -1,12 +1,6 @@
-import {
-	useAddress,
-	useContract,
-	useContractData,
-	useDisconnect,
-	useMetamask,
-} from '@thirdweb-dev/react'
+import { useAddress, useMetamask } from '@thirdweb-dev/react'
 import Link from 'next/link'
-import { NavButton, NavBar } from './'
+import { CustomButton, NavBar } from './'
 
 export const Header = () => {
 	const address = useAddress()
@@ -17,7 +11,7 @@ export const Header = () => {
 			<Link href="/">
 				<div className="col-span-1 group cursor-pointer">
 					<p className="text-2xl select-none text-red-600 group-hover:text-red-700">
-						LOTTO
+						RAFFLE
 						<span className="font-bold text-yellow-400 group-hover:text-yellow-500">
 							BLOCK
 						</span>
@@ -28,7 +22,7 @@ export const Header = () => {
 				{address ? (
 					<NavBar />
 				) : (
-					<NavButton
+					<CustomButton
 						isActive
 						onClick={connectWithMetaMask}
 						title="Connect Metamask"

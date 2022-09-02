@@ -6,7 +6,7 @@ interface Props {
 	onClick?: () => void
 }
 
-export const NavButton = ({
+export const CustomButton = ({
 	title,
 	width,
 	isActive,

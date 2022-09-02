@@ -119,7 +119,7 @@ export const Admin = () => {
 				<div className="text-center px-5 py-3 rounded-md border-stone-700 border">
 					<h2 className="font-bold">Admin Controls</h2>
 					<p className="mb-5">
-						Total Commission to be withdrawn{' '}
+						Total commission to be withdrawn{' '}
 						<span>
 							{totalCommission &&
 								ethers.utils.formatEther(totalCommission?.toString())}{' '}
@@ -132,7 +132,7 @@ export const Admin = () => {
 							onClick={drawWinner}
 							className="bg-stone-800 p-2 flex-1 rounded-md border-stone-600 border-2 hover:bg-stone-700">
 							<StarIcon className="h-6 mx-auto mb-2" />
-							Draw Winner
+							Raffle Winner
 						</button>
 						<button
 							onClick={onWithdrawCommission}
@@ -146,9 +146,11 @@ export const Admin = () => {
 							className="bg-stone-800 p-2 flex-1 rounded-md border-stone-600 border-2 hover:bg-stone-700">
 							{' '}
 							<ArrowPathIcon className="h-6 mx-auto mb-2" />
-							Restart Draw
+							Restart Raffle
 						</button>
-						<button onClick={onRefundAll} className="bg-stone-800 p-2 flex-1 rounded-md border-stone-600 border-2 hover:bg-stone-700">
+						<button
+							onClick={onRefundAll}
+							className="bg-stone-800 p-2 flex-1 rounded-md border-stone-600 border-2 hover:bg-stone-700">
 							{' '}
 							<ArrowUturnDownIcon className="h-6 mx-auto mb-2" />
 							Refund All
