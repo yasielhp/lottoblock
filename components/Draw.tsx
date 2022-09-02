@@ -1,59 +1,26 @@
-import {
-	useContract,
-	useContractData,
-	useContractCall,
-	useAddress,
-} from '@thirdweb-dev/react'
 import { CustomButton, Loading, CountdownTimer } from './'
 import { ethers } from 'ethers'
 import { useState, useEffect } from 'react'
 import { currency } from '../constants'
-import toast from 'react-hot-toast'
 import Marquee from 'react-fast-marquee'
+import { useMyContractCall, useMyContractData } from '../hooks'
 
 export const Draw = () => {
-	const address = useAddress()
+	const {
+		address,
+		expiration,
+		remainingTickets,
+		currentWinningReward,
+		ticketPrice,
+		ticketCommission,
+		lastWinner,
+		lastWinnerAmount,
+		tickets,
+		winnings,
+	} = useMyContractData()
+	const { quantity, setQuantity, isLoading, handleClick, onWithDrawWinnings } =
+		useMyContractCall()
 	const [userTickets, setUserTickets] = useState(0)
-	const [quantity, setQuantity] = useState<number>(1)
-	const { contract, isLoading } = useContract(
-		process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS
-	)
-	const { data: expiration } = useContractData(contract, 'expiration')
-	const { data: remainingTickets } = useContractData(
-		contract,
-		'RemainingTickets'
-	)
-	const { data: currentWinningReward } = useContractData(
-		contract,
-		'CurrentWinningReward'
-	)
-	const { data: ticketPrice } = useContractData(contract, 'ticketPrice')
-
-	const { data: ticketCommission } = useContractData(
-		contract,
-		'ticketCommission'
-	)
-
-	const { data: tickets } = useContractData(contract, 'getTickets')
-
-	const { mutateAsync: BuyTickets } = useContractCall(contract, 'BuyTickets')
-
-	const { data: winnings } = useContractData(
-		contract,
-		'getWinningsForAddress',
-		address
-	)
-
-	const { mutateAsync: WithdrawWinnings } = useContractCall(
-		contract,
-		'WithdrawWinnings'
-	)
-
-	const { data: lastWinner } = useContractData(contract, 'lastWinner')
-	const { data: lastWinnerAmount } = useContractData(
-		contract,
-		'lastWinnerAmount'
-	)
 
 	useEffect(() => {
 		if (!tickets) return
@@ -64,48 +31,6 @@ export const Draw = () => {
 		)
 		setUserTickets(noOfUserTickets)
 	}, [tickets, address])
-
-	const handleClick = async () => {
-		if (!ticketPrice) return
-		const notification = toast.loading('Buying your tickets...')
-		try {
-			const data = await BuyTickets([
-				{
-					value: ethers.utils.parseEther(
-						(
-							Number(ethers.utils.formatEther(ticketPrice)) * quantity
-						).toString()
-					),
-				},
-			])
-			toast.success('Tickets bought successfully!', {
-				id: notification,
-			})
-			console.info('contract call success', data)
-		} catch (error) {
-			toast.error('Whoops something went wrong', {
-				id: notification,
-			})
-			console.log('contract call failure', error)
-		}
-	}
-
-	const onWithDrawWinnings = async () => {
-		const notification = toast.loading('Withdrawing winnings...')
-
-		try {
-			const data = await WithdrawWinnings([{}])
-			toast.success('Winnings withdrawn successfully!', {
-				id: notification,
-			})
-			console.info('contract call success', data)
-		} catch (error) {
-			toast.error('Whoops something went wrong!', {
-				id: notification,
-			})
-			console.error('contract call failure', error)
-		}
-	}
 
 	if (isLoading) return <Loading title="Loading all drawings" />
 	return (
@@ -142,7 +67,7 @@ export const Draw = () => {
 			)}
 			<div className="space-y-5 space-x-0 md:space-y-0 md:flex md:flex-row items-start justify-center md:space-x-5 mt-2">
 				<div className="p-4 rounded-lg bg-stone-800 border-stone-600 border-2">
-					<h1 className="text-5xl text-white font-semibold text-center mb-4">
+					<h1 className="text-3xl text-white font-semibold text-center mb-4">
 						Raffle
 					</h1>
 					<div className="flex justify-center items-center w-full pb-2 space-x-2">
@@ -236,7 +161,7 @@ export const Draw = () => {
 					{userTickets > 0 && (
 						<div>
 							<p className="text-center font-light text-yellow-500 text-sm my-2">
-								You have {userTickets} Tickets in this draw
+								You have {userTickets} tickets in this raffle
 							</p>
 							<div className="flex max-w-sm flex-wrap gap-x-2 gap-y-2 justify-center items-center">
 								{Array(userTickets)

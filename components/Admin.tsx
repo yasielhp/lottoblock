@@ -1,11 +1,4 @@
-import {
-	useContract,
-	useMetamask,
-	useDisconnect,
-	useAddress,
-	useContractData,
-	useContractCall,
-} from '@thirdweb-dev/react'
+import { useMyContractCall, useMyContractData } from '../hooks'
 import { Loading } from './Loading'
 import {
 	StarIcon,
@@ -15,101 +8,16 @@ import {
 } from '@heroicons/react/24/solid'
 import { ethers } from 'ethers'
 import { currency } from '../constants'
-import toast from 'react-hot-toast'
 
 export const Admin = () => {
-	const address = useAddress()
-	const { contract, isLoading } = useContract(
-		process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS
-	)
-	const { data: isLotteryOperator } = useContractData(
-		contract,
-		'lotteryOperator'
-	)
-	const { data: totalCommission } = useContractData(
-		contract,
-		'operatorTotalCommission'
-	)
-
-	const { mutateAsync: DrawWinnerTicket } = useContractCall(
-		contract,
-		'DrawWinnerTicket'
-	)
-
-	const { mutateAsync: RefundAll } = useContractCall(contract, 'RefundAll')
-
-	const { mutateAsync: restartDraw } = useContractCall(contract, 'restartDraw')
-
-	const { mutateAsync: WithdrawCommission } = useContractCall(
-		contract,
-		'WithdrawCommission'
-	)
-
-	const drawWinner = async () => {
-		const notification = toast.loading('Picking a Lucky Winner...')
-
-		try {
-			const data = await DrawWinnerTicket([{}])
-			toast.success('A Winner has been selected!', {
-				id: notification,
-			})
-			console.info('contract call success', data)
-		} catch (error) {
-			toast.error('Something went wrong!', {
-				id: notification,
-			})
-			console.error('contract call error', error)
-		}
-	}
-
-	const onWithdrawCommission = async () => {
-		const notification = toast.loading('Withdrawing Commission...')
-
-		try {
-			const data = await WithdrawCommission([{}])
-			toast.success('Commission has been withdrawn!', {
-				id: notification,
-			})
-			console.info('contract call success', data)
-		} catch (error) {
-			toast.error('Something went wrong!', {
-				id: notification,
-			})
-			console.error('contract call error', error)
-		}
-	}
-
-	const onRestartDraw = async () => {
-		const notification = toast.loading('Restarting Draw...')
-		try {
-			const data = await restartDraw([{}])
-			toast.success('Draw restarted successfully!', {
-				id: notification,
-			})
-			console.info('contract call success', data)
-		} catch (error) {
-			toast.error('Something went wrong!', {
-				id: notification,
-			})
-			console.error('contract call error', error)
-		}
-	}
-
-	const onRefundAll = async () => {
-		const notification = toast.loading('Refunding all...')
-		try {
-			const data = await RefundAll([{}])
-			toast.success('All Refunded successfully!', {
-				id: notification,
-			})
-			console.info('contract call success', data)
-		} catch (error) {
-			toast.error('Something went wrong!', {
-				id: notification,
-			})
-			console.error('contract call error', error)
-		}
-	}
+	const { address, isLotteryOperator, totalCommission } = useMyContractData()
+	const {
+		isLoading,
+		drawWinner,
+		onWithdrawCommission,
+		onRestartDraw,
+		onRefundAll,
+	} = useMyContractCall()
 
 	if (isLoading) return <Loading title="Loading panel" />
 

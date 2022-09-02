@@ -7,7 +7,7 @@ export const Header = () => {
 	const connectWithMetaMask = useMetamask()
 
 	return (
-		<header className="grid grid-cols-2 justify-between items-center p-3 md:p-5 md:mx-8">
+		<header className="grid grid-cols-2 justify-between items-center px-3 pt-3 md:px-5 md:pt-5 md:mx-8">
 			<Link href="/">
 				<div className="col-span-1 group cursor-pointer">
 					<p className="text-2xl select-none text-red-600 group-hover:text-red-700">
