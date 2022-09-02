@@ -13,7 +13,7 @@ export const Layout = ({ children }: Props) => {
 				<link rel="icon" href="/favicon.svg" />
 			</Head>
 			<Header />
-			<main className="flex flex-col justify-center items-center px-5">
+			<main className="flex flex-col justify-center items-center p-3 md:p-5 md:mx-8">
 				{children}
 			</main>
 		</div>
